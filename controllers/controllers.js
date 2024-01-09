@@ -1,6 +1,7 @@
 const Event = require('../models/event')
 const Skill = require('../models/skill')
 const Project = require('../models/project')
+const User = require('../models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
@@ -35,6 +36,7 @@ exports.getAllProjects = (req, res, next) => {
 }
 
 exports.login = (req, res, next) => {
+    console.log(req.body)
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (user === null) {
@@ -50,7 +52,7 @@ exports.login = (req, res, next) => {
             } else {
               res.status(200).json({
                 userId: user._id,
-                token: jwt.sign({ userId: user._id }, 'OCP6-token_1548re58e', {
+                token: jwt.sign({ userId: user._id }, 'OCP8-token_1548re58e', {
                   expiresIn: '24h',
                 }),
               })
