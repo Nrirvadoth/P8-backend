@@ -1,6 +1,7 @@
 const Event = require('../models/event')
 const Skill = require('../models/skill')
 const Project = require('../models/project')
+const Message = require('../models/message')
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -105,7 +106,7 @@ exports.addSkill = (req, res, next) => {
 exports.addProject = (req, res, next) => {
   const object = JSON.parse(req.body.book)
   const project = new Project({
-    ...project,
+    ...object,
     thumbnail: `${req.protocol}://${req.get('host')}/images/${
       req.file.filename
     }`,
@@ -114,6 +115,31 @@ exports.addProject = (req, res, next) => {
     .save()
     .then(() => {
       res.status(201).json({ message: 'Projet créé' })
+    })
+    .catch((error) => {
+      res.status(400).json({ error })
+    })
+}
+
+exports.sendMessage = (req, res, next) => {
+  const message = new Message({
+    ...req.body,
+    date: new Date(),
+  })
+  message
+    .save()
+    .then(() => {
+      res.status(201).json({ status: 'success' })
+    })
+    .catch((error) => {
+      res.status(400).json({ error })
+    })
+}
+
+exports.getAllMessages = (req, res, next) => {
+  Message.find()
+    .then((messages) => {
+      res.status(200).json(messages)
     })
     .catch((error) => {
       res.status(400).json({ error })
