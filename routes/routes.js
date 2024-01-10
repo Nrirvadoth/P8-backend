@@ -10,8 +10,8 @@ router.get('/events', apiCtrl.getAllEvents)
 
 router.post('/login', apiCtrl.login)
 
-router.post('/skills/add', auth, images, apiCtrl.addSkill)
-router.post('/projects/add', auth, images, apiCtrl.addProject)
+router.post('/skills/add', auth, images.upload, images.optimize, apiCtrl.addSkill)
+router.post('/projects/add', auth, images.upload, images.optimize, apiCtrl.addProject)
 router.post('/events/add', auth, apiCtrl.addEvent)
 
 module.exports = router
