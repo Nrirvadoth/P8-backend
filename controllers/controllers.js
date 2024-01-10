@@ -51,6 +51,7 @@ exports.login = (req, res, next) => {
                 .json({ message: 'Idenfiant/mot de passe incorrect' })
             } else {
               res.status(200).json({
+                status: "success",
                 userId: user._id,
                 token: jwt.sign({ userId: user._id }, 'OCP8-token_1548re58e', {
                   expiresIn: '24h',
@@ -65,5 +66,56 @@ exports.login = (req, res, next) => {
     })
     .catch((error) => {
       res.status(500).json(error)
+    })
+}
+
+exports.addEvent = (req, res, next) => {
+  const object = JSON.parse(req.body.book)
+  const event = new Event({
+    ...object,
+  })
+  event
+    .save()
+    .then(() => {
+      res.status(201).json({ message: 'Event créé' })
+    })
+    .catch((error) => {
+      res.status(400).json({ error })
+    })
+}
+
+exports.addSkill = (req, res, next) => {
+  const object = JSON.parse(req.body.book)
+  const skill = new Skill({
+    ...object,
+    logoUrl: `${req.protocol}://${req.get('host')}/images/${
+      req.file.filename
+    }`,
+  })
+  skill
+    .save()
+    .then(() => {
+      res.status(201).json({ message: 'Skill créé' })
+    })
+    .catch((error) => {
+      res.status(400).json({ error })
+    })
+}
+
+exports.addProject = (req, res, next) => {
+  const object = JSON.parse(req.body.book)
+  const project = new Project({
+    ...project,
+    thumbnail: `${req.protocol}://${req.get('host')}/images/${
+      req.file.filename
+    }`,
+  })
+  project
+    .save()
+    .then(() => {
+      res.status(201).json({ message: 'Projet créé' })
+    })
+    .catch((error) => {
+      res.status(400).json({ error })
     })
 }
