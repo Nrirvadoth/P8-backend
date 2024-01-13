@@ -7,6 +7,7 @@ const upload = multer({ storage })
 exports.upload = upload.single('image') 
 
 exports.optimize = async (req, res, next) => {
+  if (req.file) {
   const { originalname, buffer } = req.file
   let name = originalname.split(' ').join('_')
   name = name.split('.')[0]
@@ -17,6 +18,7 @@ exports.optimize = async (req, res, next) => {
   await sharp(buffer)
     .webp()
     .toFile(`./images/${name}`)
+  }
   
   next()
 }
