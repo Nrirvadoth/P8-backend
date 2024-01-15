@@ -70,7 +70,7 @@ exports.login = (req, res, next) => {
 }
 
 exports.addEvent = (req, res, next) => {
-  const object = JSON.parse(req.body.book)
+  const object = req.body
   const event = new Event({
     ...object,
   })
@@ -85,10 +85,10 @@ exports.addEvent = (req, res, next) => {
 }
 
 exports.addSkill = (req, res, next) => {
-  const object = JSON.parse(req.body.book)
+  const object = JSON.parse(req.body.data)
   const skill = new Skill({
     ...object,
-    logoUrl: `${req.protocol}://${req.get('host')}/images/${
+    image: `${req.protocol}://${req.get('host')}/images/${
       req.file.filename
     }`,
   })
@@ -103,10 +103,10 @@ exports.addSkill = (req, res, next) => {
 }
 
 exports.addProject = (req, res, next) => {
-  const object = JSON.parse(req.body.book)
+  const object = JSON.parse(req.body.data)
   const project = new Project({
     ...object,
-    thumbnail: `${req.protocol}://${req.get('host')}/images/${
+    image: `${req.protocol}://${req.get('host')}/images/${
       req.file.filename
     }`,
   })
