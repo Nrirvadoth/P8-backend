@@ -1,10 +1,12 @@
+require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const apiRoutes = require('./routes/routes')
 const app = express();
 const path = require('path')
 
-mongoose.connect('mongodb+srv://mathurinmalandain:764G8rRa82HIPLpj@cluster0.iffihzw.mongodb.net/?retryWrites=true&w=majority', {useUnifiedTopology: true, useNewUrlParser: true})
+
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/?retryWrites=true&w=majority`, {useUnifiedTopology: true, useNewUrlParser: true})
 .then(console.log("mongodb connected successfully...."))
 .catch(err =>console.log(err));
 
