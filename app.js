@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const apiRoutes = require('./routes/routes')
+const functions = require('firebase-functions')
 const app = express();
 const path = require('path')
 
@@ -22,4 +23,4 @@ app.use((req, res, next) => {
 app.use('/api/', apiRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-module.exports = app;
+exports.api = functions.https.onRequest(app)

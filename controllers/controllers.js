@@ -85,12 +85,11 @@ exports.addEvent = (req, res, next) => {
 }
 
 exports.addSkill = (req, res, next) => {
+  console.log(req.file)
   const object = JSON.parse(req.body.data)
   const skill = new Skill({
     ...object,
-    image: `${req.protocol}://${req.get('host')}/images/${
-      req.file.filename
-    }`,
+
   })
   skill
     .save()
